@@ -1,0 +1,14 @@
+{
+  "name": "@paperflow/example-basic",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun run index.tsx",
+    "dev": "bun --watch run index.tsx"
+  },
+  "dependencies": {
+    "paperflow": "workspace:*",
+    "react": "^18.2.0"
+  }
+}

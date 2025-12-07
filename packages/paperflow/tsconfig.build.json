@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.build.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "paths": {
+      "@paperflow/core": ["../core/dist/index.d.ts"],
+      "@paperflow/react": ["../react/dist/index.d.ts"],
+      "@paperflow/engine-satori": ["../engine-satori/dist/index.d.ts"]
+    }
+  },
+  "include": ["src/**/*"]
+}

@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "jsx": "react-jsx",
+    "allowJs": true,
+
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "rewriteRelativeImportExtensions": true,
+
+    "strict": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@paperflow/core": ["packages/core/src/index.ts"],
+      "@paperflow/react": ["packages/react/src/index.ts"],
+      "@paperflow/engine-satori": ["packages/engine-satori/src/index.ts"],
+      "paperflow": ["packages/paperflow/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "**/dist/**", "**/__tests__/**", "**/examples/**"]
+}

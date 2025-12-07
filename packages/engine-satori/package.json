@@ -1,0 +1,39 @@
+{
+  "name": "@paperflow/engine-satori",
+  "version": "0.1.0",
+  "description": "Satori-based PDF rendering engine for PaperFlow",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bun run build:js && bun run build:types",
+    "build:js": "bun build ./src/index.ts --outdir ./dist --target node --format esm --external @paperflow/core --external satori --external pdf-lib --external @resvg/resvg-js",
+    "build:types": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "prepublishOnly": "bun run build"
+  },
+  "dependencies": {
+    "@paperflow/core": "0.1.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "pdf-lib": "^1.17.1",
+    "satori": "^0.18.3"
+  },
+  "keywords": ["pdf", "satori", "engine", "paperflow"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chasef07/paperflow.git",
+    "directory": "packages/engine-satori"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "name": "paperflow",
+  "version": "0.1.0",
+  "description": "The PDF API for developers. React components to PDF, built for the AI era.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bun run build:js && bun run build:types",
+    "build:js": "bun build ./src/index.ts --outdir ./dist --target node --format esm --external react --external @paperflow/core --external @paperflow/react --external @paperflow/engine-satori",
+    "build:types": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "prepublishOnly": "bun run build"
+  },
+  "dependencies": {
+    "@paperflow/core": "0.1.0",
+    "@paperflow/react": "0.1.0",
+    "@paperflow/engine-satori": "0.1.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "keywords": [
+    "pdf",
+    "react",
+    "bun",
+    "serverless",
+    "vercel",
+    "cloudflare",
+    "tailwind",
+    "edge"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chasef07/paperflow"
+  },
+  "homepage": "https://github.com/chasef07/paperflow"
+}

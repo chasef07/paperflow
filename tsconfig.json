@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    // Environment setup & latest features
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "jsx": "react-jsx",
+    "allowJs": true,
+
+    // Bundler mode
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+
+    // Best practices
+    "strict": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    // Some stricter flags
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false,
+
+    // Path mapping for monorepo
+    "baseUrl": ".",
+    "paths": {
+      "@paperflow/core": ["packages/core/src/index.ts"],
+      "@paperflow/react": ["packages/react/src/index.ts"],
+      "@paperflow/engine-satori": ["packages/engine-satori/src/index.ts"],
+      "paperflow": ["packages/paperflow/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "**/dist/**"]
+}
