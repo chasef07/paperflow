@@ -27,7 +27,7 @@ jobs:
         run: bun install
 
       - name: Build packages
-        run: bun run build
+        run: bunx turbo run build --filter=paperflow --filter=@paperflow/core --filter=@paperflow/react --filter=@paperflow/engine-satori
 
       - name: Publish @paperflow/core
         run: npm publish --access public -w @paperflow/core

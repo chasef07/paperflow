@@ -23,10 +23,10 @@ jobs:
         run: bun install
 
       - name: Build packages
-        run: bun run build
+        run: bunx turbo run build --filter=paperflow --filter=@paperflow/core --filter=@paperflow/react --filter=@paperflow/engine-satori
 
       - name: Run tests
-        run: bun test
+        run: bunx turbo run test --filter=@paperflow/react
 
       - name: Type check
-        run: bun run typecheck
+        run: bunx turbo run typecheck --filter=paperflow --filter=@paperflow/core --filter=@paperflow/react --filter=@paperflow/engine-satori
