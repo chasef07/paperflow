@@ -1,6 +1,6 @@
 {
   "name": "@paperflow/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React components for PaperFlow PDF rendering",
   "type": "module",
   "main": "./dist/index.js",
@@ -24,13 +24,18 @@
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
-    "@paperflow/core": "0.1.0",
-    "@paperflow/engine-satori": "0.1.0"
+    "@paperflow/core": "0.1.1",
+    "@paperflow/engine-satori": "0.1.1"
   },
   "peerDependencies": {
     "react": ">=18.0.0"
   },
-  "keywords": ["pdf", "react", "components", "paperflow"],
+  "keywords": [
+    "pdf",
+    "react",
+    "components",
+    "paperflow"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 {
   "name": "@paperflow/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Core types, IR, and loaders for PaperFlow",
   "type": "module",
   "main": "./dist/index.js",
@@ -23,7 +23,12 @@
     "test": "bun test",
     "prepublishOnly": "bun run build"
   },
-  "keywords": ["pdf", "core", "types", "paperflow"],
+  "keywords": [
+    "pdf",
+    "core",
+    "types",
+    "paperflow"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

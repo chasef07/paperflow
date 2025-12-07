@@ -1,6 +1,6 @@
 {
   "name": "paperflow",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The PDF API for developers. React components to PDF, built for the AI era.",
   "type": "module",
   "main": "./dist/index.js",
@@ -24,9 +24,9 @@
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
-    "@paperflow/core": "0.1.0",
-    "@paperflow/react": "0.1.0",
-    "@paperflow/engine-satori": "0.1.0"
+    "@paperflow/core": "0.1.1",
+    "@paperflow/react": "0.1.1",
+    "@paperflow/engine-satori": "0.1.1"
   },
   "peerDependencies": {
     "react": ">=18.0.0"
