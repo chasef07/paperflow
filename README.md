@@ -1,14 +1,17 @@
-# PaperSend
+# PaperFlow
 
 The PDF API for developers. React components to PDF, built for the AI era.
 
+[![npm version](https://img.shields.io/npm/v/paperflow.svg)](https://www.npmjs.com/package/paperflow)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ```tsx
-import { render, Document, Page, Text } from 'papersend';
+import { render, Document, Page, Text } from 'paperflow';
 
 const pdf = await render(
   <Document>
     <Page>
-      <Text className="text-2xl font-bold">Hello World</Text>
+      <Text style={{ fontSize: 24, fontWeight: 700 }}>Hello World</Text>
     </Page>
   </Document>
 );
@@ -19,40 +22,43 @@ await pdf.toFile('output.pdf');
 ## Installation
 
 ```bash
-bun add papersend
+npm install paperflow
 # or
-npm install papersend
+bun add paperflow
+# or
+yarn add paperflow
 ```
 
-## Why PaperSend?
+## Why PaperFlow?
 
-| Feature | @react-pdf/renderer | PaperSend |
+| Feature | @react-pdf/renderer | PaperFlow |
 |---------|---------------------|-----------|
-| Fonts | Manual registration, file paths | Auto-detect from CDN |
-| Serverless | Broken on Vercel/Cloudflare | Native support |
-| Tailwind | Not supported | First-class support |
-| Images | Manual handling | URL, Buffer, Base64 |
-| API Style | Complex setup | Resend-like simplicity |
+| Fonts | Manual registration, file paths | Auto-loads from Google Fonts |
+| Serverless | Broken on Vercel/Cloudflare | Works everywhere |
+| Tailwind | Not supported | Built-in support |
+| Images | Manual handling | URL, Buffer, Base64, async |
+| Bundle | ~500KB | Optimized for edge |
+| API Style | Complex setup | Simple, Resend-like |
 
-### The Problem with @react-pdf/renderer
+### The Problem
 
 ```tsx
-// Before (react-pdf) - Breaks on Vercel/Cloudflare
+// @react-pdf/renderer - Breaks on Vercel/Cloudflare
 import { Font } from '@react-pdf/renderer';
 
 Font.register({
   family: 'Inter',
-  src: './fonts/Inter.ttf', // File path doesn't work in serverless
+  src: './fonts/Inter.ttf', // File paths don't work in serverless!
 });
 ```
 
-### The PaperSend Solution
+### The Solution
 
 ```tsx
-// After (PaperSend) - Just works everywhere
+// PaperFlow - Just works everywhere
 <Text style={{ fontFamily: 'Inter' }}>Hello</Text>
 
-// Fonts are automatically loaded from CDN
+// Fonts automatically load from CDN
 // Works on Vercel, Cloudflare Workers, Bun, Node.js
 ```
 
@@ -61,13 +67,18 @@ Font.register({
 ### Basic Usage
 
 ```tsx
-import { render, Document, Page, View, Text } from 'papersend';
+import { render, Document, Page, View, Text } from 'paperflow';
 
 const MyDocument = () => (
-  <Document title="My PDF" author="PaperSend">
+  <Document title="My PDF" author="PaperFlow">
     <Page size="A4" margin={40}>
-      <Text style={{ fontSize: 24, fontWeight: 700 }}>
-        Hello, PaperSend!
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ fontSize: 32, fontWeight: 700 }}>
+          Hello, PaperFlow!
+        </Text>
+      </View>
+      <Text style={{ fontSize: 16, color: '#666' }}>
+        Generate PDFs with React components.
       </Text>
     </Page>
   </Document>
@@ -77,40 +88,44 @@ const result = await render(<MyDocument />);
 await result.toFile('output.pdf');
 ```
 
-### With Tailwind Classes
+### Invoice Example
 
 ```tsx
-import { render, Document, Page, View, Text } from 'papersend';
+import { render, Document, Page, View, Text } from 'paperflow';
 
 const Invoice = () => (
   <Document>
-    <Page className="p-12">
-      <View className="flex justify-between mb-8">
-        <Text className="text-3xl font-bold">INVOICE</Text>
-        <Text className="text-gray-500">#INV-001</Text>
+    <Page size="A4" margin={50}>
+      {/* Header */}
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 40 }}>
+        <Text style={{ fontSize: 32, fontWeight: 700 }}>INVOICE</Text>
+        <Text style={{ fontSize: 14, color: '#666' }}>#INV-001</Text>
       </View>
 
-      <View className="flex flex-col gap-2 mb-8">
-        <Text className="font-bold">Acme Corp</Text>
-        <Text className="text-gray-600">123 Main St</Text>
-        <Text className="text-gray-600">San Francisco, CA 94102</Text>
+      {/* Company Info */}
+      <View style={{ marginBottom: 40 }}>
+        <Text style={{ fontSize: 16, fontWeight: 600 }}>Acme Corp</Text>
+        <Text style={{ color: '#666' }}>123 Main St</Text>
+        <Text style={{ color: '#666' }}>San Francisco, CA 94102</Text>
       </View>
 
-      <View className="border rounded-lg p-4">
-        <View className="flex bg-gray-100 p-2 font-bold">
-          <Text className="flex-1">Item</Text>
-          <Text className="w-20 text-right">Qty</Text>
-          <Text className="w-24 text-right">Price</Text>
-        </View>
-        <View className="flex p-2 border-t">
-          <Text className="flex-1">Widget Pro</Text>
-          <Text className="w-20 text-right">2</Text>
-          <Text className="w-24 text-right">$99.00</Text>
+      {/* Line Items */}
+      <View style={{ backgroundColor: '#f5f5f5', padding: 12, borderRadius: 4 }}>
+        <View style={{ flexDirection: 'row', fontWeight: 600 }}>
+          <Text style={{ flex: 1 }}>Item</Text>
+          <Text style={{ width: 80, textAlign: 'right' }}>Qty</Text>
+          <Text style={{ width: 100, textAlign: 'right' }}>Price</Text>
         </View>
       </View>
+      <View style={{ flexDirection: 'row', padding: 12, borderBottomWidth: 1, borderBottomColor: '#eee' }}>
+        <Text style={{ flex: 1 }}>Widget Pro</Text>
+        <Text style={{ width: 80, textAlign: 'right' }}>2</Text>
+        <Text style={{ width: 100, textAlign: 'right' }}>$99.00</Text>
+      </View>
 
-      <View className="mt-4 text-right">
-        <Text className="text-xl font-bold">Total: $198.00</Text>
+      {/* Total */}
+      <View style={{ marginTop: 20, alignItems: 'flex-end' }}>
+        <Text style={{ fontSize: 20, fontWeight: 700 }}>Total: $198.00</Text>
       </View>
     </Page>
   </Document>
@@ -123,11 +138,11 @@ await result.toFile('invoice.pdf');
 ### Resend-like API
 
 ```tsx
-import { PaperSend, Document, Page, Text } from 'papersend';
+import { PaperFlow, Document, Page, Text } from 'paperflow';
 
-const papersend = new PaperSend();
+const paperflow = new PaperFlow();
 
-const { data, error } = await papersend.pdfs.create(
+const { data, error } = await paperflow.pdfs.create(
   <Document>
     <Page>
       <Text>Hello World</Text>
@@ -150,7 +165,7 @@ Root container for PDF documents.
 
 ```tsx
 <Document
-  title="Invoice #123"      // PDF metadata
+  title="Invoice #123"
   author="Acme Corp"
   subject="Monthly Invoice"
 >
@@ -172,18 +187,18 @@ Represents a single page in the PDF.
 </Page>
 ```
 
+**Page Sizes:**
+- `A4` - 595 x 842 pts (default)
+- `Letter` - 612 x 792 pts
+- `Legal` - 612 x 1008 pts
+- Custom: `{ width: 500, height: 700 }`
+
 ### `<View>`
 
-Container component, like a `div`. Uses flexbox by default.
+Container component (like a `div`). Uses flexbox layout.
 
 ```tsx
-<View style={{ flexDirection: 'row', gap: 16 }}>
-  <Text>Left</Text>
-  <Text>Right</Text>
-</View>
-
-// Or with Tailwind
-<View className="flex flex-row gap-4">
+<View style={{ flexDirection: 'row', gap: 16, padding: 20 }}>
   <Text>Left</Text>
   <Text>Right</Text>
 </View>
@@ -194,23 +209,26 @@ Container component, like a `div`. Uses flexbox by default.
 Text content component.
 
 ```tsx
-<Text style={{ fontSize: 24, fontWeight: 700, color: '#111827' }}>
-  Hello World
-</Text>
-
-// Or with Tailwind
-<Text className="text-2xl font-bold text-gray-900">
+<Text style={{
+  fontSize: 24,
+  fontWeight: 700,
+  color: '#111827',
+  fontFamily: 'Inter'
+}}>
   Hello World
 </Text>
 ```
 
 ### `<Image>`
 
-Image component. Supports URLs, base64, and buffers.
+Image component. Supports multiple source types.
 
 ```tsx
 // From URL
-<Image src="https://example.com/logo.png" style={{ width: 100, height: 100 }} />
+<Image
+  src="https://example.com/logo.png"
+  style={{ width: 100, height: 100 }}
+/>
 
 // From base64
 <Image src="data:image/png;base64,..." />
@@ -228,118 +246,170 @@ Hyperlink component.
 
 ```tsx
 <Link href="https://example.com">
-  <Text className="text-blue-600 underline">Click here</Text>
+  <Text style={{ color: '#2563eb', textDecoration: 'underline' }}>
+    Visit our website
+  </Text>
 </Link>
 ```
 
-## Tailwind Support
+## Styling
 
-PaperSend includes built-in Tailwind CSS support. No configuration needed.
-
-### Supported Classes
-
-**Spacing**
-- Padding: `p-{0-24}`, `px-{n}`, `py-{n}`, `pt-{n}`, `pr-{n}`, `pb-{n}`, `pl-{n}`
-- Margin: `m-{0-24}`, `mx-{n}`, `my-{n}`, `mt-{n}`, `mr-{n}`, `mb-{n}`, `ml-{n}`
-- Gap: `gap-{0-24}`
-
-**Flexbox**
-- `flex`, `flex-row`, `flex-col`
-- `justify-start`, `justify-center`, `justify-end`, `justify-between`
-- `items-start`, `items-center`, `items-end`
-- `flex-1`, `flex-grow`, `flex-shrink`
-
-**Typography**
-- Size: `text-xs`, `text-sm`, `text-base`, `text-lg`, `text-xl`, `text-2xl`, `text-3xl`, `text-4xl`, `text-5xl`
-- Weight: `font-thin`, `font-light`, `font-normal`, `font-medium`, `font-semibold`, `font-bold`, `font-extrabold`
-- Align: `text-left`, `text-center`, `text-right`
-
-**Colors**
-- Text: `text-{color}-{shade}` (e.g., `text-gray-900`, `text-blue-500`)
-- Background: `bg-{color}-{shade}`
-
-**Borders**
-- Width: `border`, `border-{n}`
-- Radius: `rounded`, `rounded-lg`, `rounded-full`
-
-**Sizing**
-- Width: `w-{n}`, `w-full`
-- Height: `h-{n}`, `h-full`
-
-### Inline Styles Override Tailwind
+### Inline Styles
 
 ```tsx
-// Tailwind sets text-black, but inline style overrides with red
-<Text className="text-black" style={{ color: '#ff0000' }}>
-  This will be red
+<View style={{
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: 20,
+  backgroundColor: '#f5f5f5',
+  borderRadius: 8,
+}}>
+  <Text style={{ fontSize: 18, fontWeight: 600 }}>Title</Text>
+  <Text style={{ color: '#666' }}>Subtitle</Text>
+</View>
+```
+
+### Supported Style Properties
+
+**Layout (Flexbox)**
+- `display`, `flexDirection`, `flexWrap`
+- `justifyContent`, `alignItems`, `alignSelf`
+- `flex`, `flexGrow`, `flexShrink`, `flexBasis`
+- `gap`, `rowGap`, `columnGap`
+
+**Spacing**
+- `padding`, `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft`
+- `margin`, `marginTop`, `marginRight`, `marginBottom`, `marginLeft`
+
+**Sizing**
+- `width`, `height`, `minWidth`, `maxWidth`, `minHeight`, `maxHeight`
+
+**Typography**
+- `fontFamily`, `fontSize`, `fontWeight`, `fontStyle`
+- `color`, `textAlign`, `textDecoration`, `lineHeight`, `letterSpacing`
+
+**Visual**
+- `backgroundColor`, `opacity`
+- `borderWidth`, `borderColor`, `borderStyle`, `borderRadius`
+
+**Position**
+- `position` (`relative` | `absolute`)
+- `top`, `right`, `bottom`, `left`, `zIndex`
+
+## Fonts
+
+Fonts are **automatically loaded** from Google Fonts. Just use the font family name:
+
+```tsx
+<Text style={{ fontFamily: 'Inter', fontWeight: 600 }}>
+  Using Inter font
+</Text>
+
+<Text style={{ fontFamily: 'Roboto Mono' }}>
+  Using Roboto Mono
 </Text>
 ```
 
-## Render Result
+### Popular Fonts (all work automatically)
 
-The `render()` function returns a `RenderResult` object:
+- Inter, Roboto, Open Sans, Lato, Poppins
+- Montserrat, Nunito, Raleway, Ubuntu
+- Plus Jakarta Sans, DM Sans, Work Sans
+- Merriweather, Playfair Display, Lora (serif)
+- Fira Code, JetBrains Mono, Source Code Pro (monospace)
+
+### Custom Fonts
+
+```tsx
+import { registerFont } from 'paperflow';
+
+registerFont({
+  family: 'MyCustomFont',
+  src: 'https://example.com/fonts/MyFont.woff2',
+  weight: 400,
+  style: 'normal',
+});
+```
+
+## Render Result
 
 ```tsx
 const result = await render(<MyDocument />);
 
 // Properties
-result.buffer;         // Buffer - The PDF as bytes
-result.pages;          // number - Page count
-result.metadata;       // { title?, author?, createdAt }
+result.buffer         // Buffer - Raw PDF bytes
+result.pages          // number - Page count
+result.metadata       // { title?, author?, createdAt }
 
 // Methods
-result.toBase64();     // string - Base64 encoded PDF
-result.toDataUri();    // string - Data URI for embedding
-result.toStream();     // ReadableStream - For streaming responses
-await result.toFile('output.pdf');  // Save to file
+result.toBase64()     // string - Base64 encoded
+result.toDataUri()    // string - Data URI for embedding
+result.toStream()     // ReadableStream
+await result.toFile('output.pdf')  // Save to file
 ```
 
-## Edge Runtime / Serverless
+## Serverless / Edge Runtime
 
-PaperSend is designed for serverless environments:
+PaperFlow works great in serverless environments:
+
+### Vercel Edge Function
 
 ```tsx
-// Vercel Edge Function
+import { render, Document, Page, Text } from 'paperflow';
+
 export const runtime = 'edge';
 
 export async function GET() {
-  const result = await render(<Invoice />);
+  const result = await render(
+    <Document>
+      <Page>
+        <Text>Generated on the edge!</Text>
+      </Page>
+    </Document>
+  );
 
   return new Response(result.buffer, {
     headers: {
       'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename="invoice.pdf"',
+      'Content-Disposition': 'attachment; filename="document.pdf"',
     },
   });
 }
 ```
 
+### Bun Server
+
 ```tsx
-// Cloudflare Worker
-export default {
-  async fetch(request: Request): Promise<Response> {
-    const result = await render(<Invoice />);
+import { render, Document, Page, Text } from 'paperflow';
+
+Bun.serve({
+  port: 3000,
+  async fetch(req) {
+    const result = await render(
+      <Document>
+        <Page>
+          <Text>Hello from Bun!</Text>
+        </Page>
+      </Document>
+    );
 
     return new Response(result.buffer, {
-      headers: {
-        'Content-Type': 'application/pdf',
-      },
+      headers: { 'Content-Type': 'application/pdf' },
     });
   },
-};
+});
 ```
 
 ## Error Handling
 
-PaperSend provides helpful error messages:
-
 ```tsx
-import { render, PaperSendError, isPaperSendError } from 'papersend';
+import { render, PaperFlowError, isPaperFlowError } from 'paperflow';
 
 try {
   const result = await render(<MyDocument />);
 } catch (error) {
-  if (isPaperSendError(error)) {
+  if (isPaperFlowError(error)) {
     console.error('Code:', error.code);
     console.error('Message:', error.message);
     console.error('Suggestion:', error.suggestion);
@@ -347,7 +417,7 @@ try {
 }
 ```
 
-### Common Error Codes
+### Error Codes
 
 | Code | Description |
 |------|-------------|
@@ -357,83 +427,35 @@ try {
 | `LOCAL_FILE_NOT_SUPPORTED` | Local file paths don't work in serverless |
 | `RENDER_FAILED` | General render error |
 
-## Fonts
-
-Fonts are automatically loaded from Google Fonts CDN. Just use the font family name:
-
-```tsx
-<Text style={{ fontFamily: 'Inter', fontWeight: 600 }}>
-  Using Inter font
-</Text>
-
-<Text style={{ fontFamily: 'Roboto' }}>
-  Using Roboto font
-</Text>
-```
-
-### Supported Fonts
-
-Any Google Font works automatically. Popular choices:
-- Inter
-- Roboto
-- Open Sans
-- Lato
-- Poppins
-- Plus Jakarta Sans
-- Montserrat
-- And thousands more...
-
-### Custom Font Registration
-
-```tsx
-import { registerFont } from 'papersend';
-
-// Register a custom font from URL
-registerFont({
-  family: 'MyCustomFont',
-  src: 'https://example.com/fonts/MyFont.woff2',
-  weight: 400,
-});
-```
-
-## API Reference
-
-### `render(element, options?)`
-
-Renders a React element to PDF.
-
-```tsx
-const result = await render(element, {
-  engine: 'satori',  // Rendering engine (default: 'satori')
-});
-```
-
-### `renderToBuffer(element)`
-
-Simple render that returns just the buffer.
-
-```tsx
-const buffer = await renderToBuffer(<MyDocument />);
-```
-
-### `PaperSend` class
-
-Resend-like API for PDF generation.
-
-```tsx
-const papersend = new PaperSend({
-  apiKey: 'ps_xxx',  // For future cloud API
-  engine: 'satori',
-});
-
-const { data, error } = await papersend.pdfs.create(<MyDocument />);
-```
-
 ## Examples
 
-See the [examples](./examples) directory:
-- [Basic Invoice](./examples/basic) - Simple invoice generation
+Check out the [examples](./examples) directory:
+
+- **[Basic](./examples/basic)** - Simple invoice generation with Bun
+
+## Packages
+
+| Package | Description |
+|---------|-------------|
+| `paperflow` | Main package - install this one |
+| `@paperflow/react` | React components |
+| `@paperflow/core` | Core types and utilities |
+| `@paperflow/engine-satori` | Satori rendering engine |
+
+## Requirements
+
+- Node.js 18+ or Bun
+- React 18+
 
 ## License
 
 MIT
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a PR.
+
+## Links
+
+- [npm](https://www.npmjs.com/package/paperflow)
+- [GitHub](https://github.com/chasef07/paperflow)
