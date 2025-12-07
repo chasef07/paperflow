@@ -30,7 +30,7 @@ export const ELEMENT_TYPES = {
 // =============================================================================
 
 export interface DocumentProps {
-  children: ReactNode;
+  children?: ReactNode;
   /** PDF title metadata */
   title?: string;
   /** PDF author metadata */

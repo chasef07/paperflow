@@ -1,6 +1,6 @@
 {
   "name": "@paperflow/engine-satori",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Satori-based PDF rendering engine for PaperFlow",
   "type": "module",
   "main": "./dist/index.js",
@@ -24,7 +24,7 @@
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
-    "@paperflow/core": "0.1.2",
+    "@paperflow/core": "0.1.3",
     "@resvg/resvg-js": "^2.6.2",
     "pdf-lib": "^1.17.1",
     "satori": "^0.18.3"
